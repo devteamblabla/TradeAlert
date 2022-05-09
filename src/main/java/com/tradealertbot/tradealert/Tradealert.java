@@ -15,4 +15,29 @@ public class Tradealert extends TelegramLongPollingBot {
         this.BOT_TOKEN = BOT_TOKEN;
         this.BOT_USERNAME = BOT_USERNAME;
     }
+
+    @Override
+    public String getBotToken() {
+        return BOT_TOKEN;
+    }
+
+    @Override
+    public String getBotUsername() {
+        return BOT_USERNAME;
+    }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            SendMessage message = new SendMessage();
+            message.setChatId(update.getMessage().getChatId().toString());
+            message.setReplyToMessageId(update.getMessage().getMessageId());
+            message.setText(update.getMessage().getText());
+            try {
+                execute(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
