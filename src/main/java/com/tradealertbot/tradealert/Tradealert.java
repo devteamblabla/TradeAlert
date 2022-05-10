@@ -6,10 +6,12 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class Tradealert extends TelegramLongPollingBot {
-    String BOT_TOKEN;
-    String BOT_USERNAME;
+    private String BOT_TOKEN;
+    private String BOT_USERNAME;
 
     Tradealert(@Value("$(bot.BOT_TOKEN)") String BOT_TOKEN, @Value("$(bot.BOT_USERNAME)") String BOT_USERNAME) {
         this.BOT_TOKEN = BOT_TOKEN;
@@ -39,5 +41,10 @@ public class Tradealert extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
+    }
+
+    @PostConstruct
+    public void start() {
+        System.out.println(getBotUsername() + " started Successfully");
     }
 }
